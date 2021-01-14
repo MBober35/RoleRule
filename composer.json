@@ -1,0 +1,28 @@
+{
+    "name": "mbober35/role-rule",
+    "description": "Roles and rules for larevel users",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MBober35",
+            "email": "info@mbober.ru"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "laravel/framework": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MBober35\\RoleRule\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MBober35\\RoleRule\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}
