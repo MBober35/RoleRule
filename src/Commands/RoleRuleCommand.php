@@ -50,6 +50,25 @@ class RoleRuleCommand extends Command
     public function handle()
     {
         $this->noReplace = $this->option("no-replace");
+
+        $this->exports();
+
+        $this->makeDefaultRoles();
+    }
+
+    /**
+     * Создание ролей.
+     */
+    protected function makeDefaultRoles()
+    {
+        $this->call("role-rule:default");
+    }
+
+    /**
+     * Создать необходимые файлы.
+     */
+    protected function exports()
+    {
         // Export models.
         $this->copyStubs($this->prefix . "models", "Models", $this->noReplace);
 

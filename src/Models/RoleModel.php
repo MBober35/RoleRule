@@ -10,6 +10,11 @@ class RoleModel extends Model
 {
     use HasFactory, ShouldSlug;
 
+    const DEFAULT_ROLES = [
+        "admin" => "Администратор",
+        "editor" => "Редактор",
+    ];
+
     protected $fillable = [
         "key",
         "title",
