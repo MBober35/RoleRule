@@ -14,9 +14,20 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view("mbober-admin::roles.index");
+        $query = Role::query();
+        if ($title = $request->get("title", false)) {
+            $query->where("title", "like", "%$title%");
+        }
+        $query->orderBy("title");
+        $roles = $query
+            ->paginate()
+            ->appends($request->input());
+
+        $perPage = $roles->perPage();
+        $page = $roles->currentPage();
+        return view("mbober-admin::roles.index", compact("request", "roles", "perPage", "page"));
     }
 
     /**
