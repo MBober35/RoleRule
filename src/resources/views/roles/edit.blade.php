@@ -34,6 +34,7 @@
                             <label for="key" class="form-label">Адрес</label>
                             <input type="text"
                                    id="key"
+                                   {{ $role->default ? "readonly" : "" }}
                                    name="key"
                                    value="{{ old("key", $role->key) }}"
                                    class="form-control @error("key") is-invalid @enderror">

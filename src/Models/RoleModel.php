@@ -21,4 +21,14 @@ class RoleModel extends Model
     ];
 
     protected $routeKey = "key";
+
+    /**
+     * Стандартная роль.
+     *
+     * @return bool
+     */
+    public function getDefaultAttribute()
+    {
+        return ! empty(self::DEFAULT_ROLES[$this->key]);
+    }
 }

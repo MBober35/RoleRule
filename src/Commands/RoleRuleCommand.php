@@ -72,6 +72,9 @@ class RoleRuleCommand extends Command
         // Export models.
         $this->copyStubs($this->prefix . "models", "Models", $this->noReplace);
 
+        // Export observers.
+        $this->copyStubs($this->prefix . "observers", "Observers", $this->noReplace);
+
         // Export controllers.
         $this->copyStubs($this->prefix . "controllers", "Http/Controllers/RoleRule", $this->noReplace);
         $this->copyStubs($this->prefix . "admin", "Http/Controllers", $this->noReplace);

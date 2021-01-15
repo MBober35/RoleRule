@@ -1,0 +1,7 @@
+<?php
+
+namespace App\Observers;
+
+use MBober35\RoleRule\Observers\RoleObserver as Observer;
+
+class RoleObserver extends Observer {}

@@ -2,6 +2,8 @@
 
 namespace MBober35\RoleRule;
 
+use App\Models\Role;
+use App\Observers\RoleObserver;
 use Illuminate\Support\ServiceProvider as BaseProvider;
 use MBober35\RoleRule\Commands\InitRolesCommand;
 use MBober35\RoleRule\Commands\RoleRuleCommand;
@@ -44,5 +46,18 @@ class ServiceProvider extends BaseProvider
 
         // Подключение шаблонов.
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'mbober-admin');
+
+        // Подключение наблюдателей.
+        $this->addObservers();
+    }
+
+    /**
+     * Наблюдатели.
+     */
+    protected function addObservers()
+    {
+        if (class_exists(RoleObserver::class) && class_exists(Role::class)) {
+            Role::observe(RoleObserver::class);
+        }
     }
 }
