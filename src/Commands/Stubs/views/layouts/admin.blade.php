@@ -1,0 +1,1 @@
+@include("mbober-admin::layouts.admin")

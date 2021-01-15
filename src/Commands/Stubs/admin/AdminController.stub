@@ -1,0 +1,7 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use MBober35\RoleRule\Controllers\AdminController as Controller;
+
+class AdminController extends Controller {}

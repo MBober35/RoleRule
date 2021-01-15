@@ -1,10 +1,9 @@
 <?php
 
-namespace MBober35\Starter;
+namespace MBober35\RoleRule;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseProvider;
+use MBober35\RoleRule\Commands\RoleRuleCommand;
 
 class ServiceProvider extends BaseProvider
 {
@@ -15,7 +14,17 @@ class ServiceProvider extends BaseProvider
      */
     public function register()
     {
-        
+        // Команды.
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                RoleRuleCommand::class,
+            ]);
+        }
+
+        // Конфигурация.
+        $this->mergeConfigFrom(
+            __DIR__ . '/config/role-rule.php', "role-rule"
+        );
     }
 
     /**
@@ -25,6 +34,13 @@ class ServiceProvider extends BaseProvider
      */
     public function boot()
     {
-        
+        // Миграции.
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+
+        // Адреса.
+        $this->loadRoutesFrom(__DIR__ . '/routes/admin.php');
+
+        // Подключение шаблонов.
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'mbober-admin');
     }
 }
