@@ -1,5 +1,5 @@
 <?php
 
 return [
-    "adminLayout" => "layouts.app",
+    "adminLayout" => "layouts.admin",
 ];
