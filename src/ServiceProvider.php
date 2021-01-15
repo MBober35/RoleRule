@@ -7,6 +7,7 @@ use App\Observers\RoleObserver;
 use Illuminate\Support\ServiceProvider as BaseProvider;
 use MBober35\RoleRule\Commands\InitRolesCommand;
 use MBober35\RoleRule\Commands\RoleRuleCommand;
+use MBober35\RoleRule\Commands\SetAdminRoleCommand;
 
 class ServiceProvider extends BaseProvider
 {
@@ -22,6 +23,7 @@ class ServiceProvider extends BaseProvider
             $this->commands([
                 RoleRuleCommand::class,
                 InitRolesCommand::class,
+                SetAdminRoleCommand::class,
             ]);
         }
 

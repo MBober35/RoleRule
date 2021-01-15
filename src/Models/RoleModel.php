@@ -2,6 +2,7 @@
 
 namespace MBober35\RoleRule\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use MBober35\Helpers\Traits\ShouldSlug;
@@ -14,6 +15,8 @@ class RoleModel extends Model
         "admin" => "Администратор",
         "editor" => "Редактор",
     ];
+
+    const SUPER = "admin";
 
     protected $fillable = [
         "key",
@@ -30,5 +33,15 @@ class RoleModel extends Model
     public function getDefaultAttribute()
     {
         return ! empty(self::DEFAULT_ROLES[$this->key]);
+    }
+
+    /**
+     * Пользователи.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }
