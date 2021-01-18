@@ -13,4 +13,9 @@ class RoleObserver
             throw new PreventDeleteException("Невозможно удалить роль");
         }
     }
+
+    public function deleted(Role $role)
+    {
+        $role->users()->sync([]);
+    }
 }

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use MBober35\RoleRule\Events\UserRoleChange;
 use Symfony\Component\Finder\SplFileInfo;
 
 class SetAdminRoleCommand extends Command
@@ -75,6 +76,7 @@ class SetAdminRoleCommand extends Command
             return;
         }
         $role->users()->syncWithoutDetaching([$user->id]);
+        UserRoleChange::dispatch($user);
         $this->info("Now {$user->name} is admin");
     }
 

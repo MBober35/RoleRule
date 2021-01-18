@@ -15,4 +15,18 @@ class RuleModel extends Model
         "policy",
         "slug",
     ];
+
+    /**
+     * Доступне права.
+     *
+     * @return array
+     */
+    public function getPermitListAttribute()
+    {
+        $class = $this->policy;
+        if (class_exists($class) && method_exists($class, "getPermissions")) {
+            return $class::getPermissions();
+        }
+        return [];
+    }
 }

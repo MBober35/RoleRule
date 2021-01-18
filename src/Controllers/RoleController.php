@@ -4,6 +4,7 @@ namespace MBober35\RoleRule\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -78,9 +79,24 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Role $role, Rule $rule = null)
     {
-        return view("mbober-admin::roles.show", compact("role"));
+        $rules = Rule::query()
+            ->orderBy("title")
+            ->get();
+
+        if ($rules->count() && empty($rule)) {
+            $rule = $rules->first();
+            return redirect()
+                ->route("admin.roles.rule", compact("role", "rule"));
+        }
+        return view("mbober-admin::roles.show", compact("role", "rules", "rule"));
+    }
+
+    public function updateRule(Role $role, Rule $rule)
+    {
+        return redirect()
+            ->back();
     }
 
     /**

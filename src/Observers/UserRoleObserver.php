@@ -36,4 +36,14 @@ class UserRoleObserver
             throw new PreventDeleteException("Невозможно удалить пользователя");
         }
     }
+
+    /**
+     * После удаления.
+     *
+     * @param User $user
+     */
+    public function deleted(User $user)
+    {
+        $user->roles()->sync([]);
+    }
 }

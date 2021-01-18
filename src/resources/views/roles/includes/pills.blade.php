@@ -20,7 +20,7 @@
                     @isset($role)
                         <li class="nav-item">
                             <a href="{{ route("admin.roles.show", compact("role")) }}"
-                               class="nav-link{{ active_state()->sliceActive("show") }}">
+                               class="nav-link{{ active_state()->sliceActive(["show", "rule"]) }}">
                                 Просмотр
                             </a>
                         </li>
