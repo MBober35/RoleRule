@@ -38,9 +38,13 @@
                                         <ul class="list-unstyled">
                                             @foreach ($item->roles as $role)
                                                 <li>
-                                                    <a href="{{ route("admin.roles.show", compact("role")) }}">
+                                                    @can("role-master")
+                                                        <a href="{{ route("admin.roles.show", compact("role")) }}">
+                                                            {{ $role->title }}
+                                                        </a>
+                                                    @else
                                                         {{ $role->title }}
-                                                    </a>
+                                                    @endcan
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -58,7 +62,7 @@
                                                         <i class="far fa-eye"></i>
                                                     </a>
                                                 @endcan
-                                                @can("destroy", $item)
+                                                @can("delete", $item)
                                                     <button type="button" class="btn btn-danger" data-confirm="{{ "delete-user-form-{$item->id}" }}">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>

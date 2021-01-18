@@ -35,6 +35,9 @@ class UserRoleObserver
         if ($user->hasRole(Role::SUPER)) {
             throw new PreventDeleteException("Невозможно удалить пользователя");
         }
+        if (Auth::id() == $user->id) {
+            throw new PreventDeleteException("Невозможно удалить себя");
+        }
     }
 
     /**

@@ -45,10 +45,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::query()
-            ->select("title", "id")
-            ->orderBy("title")
-            ->get();
+        $roles = Role::getForAdmin();
 
         return view("mbober-admin::users.create", compact("roles"));
     }
@@ -111,10 +108,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::query()
-            ->select("title", "id")
-            ->orderBy("title")
-            ->get();
+        $roles = Role::getForAdmin();
 
         $current = $user->role_ids;
         return view("mbober-admin::users.edit", compact("user", "roles", "current"));

@@ -47,6 +47,11 @@
 
                         <div class="mb-3">
                             <label>Роли</label>
+                            @if (! \Illuminate\Support\Facades\Auth::user()->isSuperUser() && $user->isSuperUser())
+                                @if ($id = \App\Models\Role::getSuperId())
+                                    <input type="hidden" name="roles[]" value="{{ $id }}">
+                                @endif
+                            @endif
                             @foreach($roles as $role)
                                 <div class="form-check">
                                     <input class="form-check-input"

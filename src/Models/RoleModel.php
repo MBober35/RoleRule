@@ -2,10 +2,12 @@
 
 namespace MBober35\RoleRule\Models;
 
+use App\Models\Role;
 use App\Models\Rule;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use MBober35\Helpers\Traits\ShouldSlug;
 
 class RoleModel extends Model
@@ -53,6 +55,38 @@ class RoleModel extends Model
      */
     public function getDefaultAttribute()
     {
-        return ! empty(self::DEFAULT_ROLES[$this->key]);
+        return ! empty(Role::DEFAULT_ROLES[$this->key]);
+    }
+
+    /**
+     * Получить роли для создания или редактирования.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public static function getForAdmin()
+    {
+        $roles = Role::query()
+            ->select("title", "id");
+        if (! Auth::user()->isSuperUser()) {
+            $roles->where("key", "!=", Role::SUPER);
+        }
+        return $roles
+            ->orderBy("title")
+            ->get();
+    }
+
+    /**
+     * Получить id главной роли.
+     *
+     * @return false|\Illuminate\Database\Eloquent\HigherOrderBuilderProxy|mixed
+     */
+    public static function getSuperId()
+    {
+        $id = Role::query()
+            ->select("id")
+            ->where("key", Role::SUPER)
+            ->first();
+        if (empty($id)) return false;
+        return $id->id;
     }
 }
