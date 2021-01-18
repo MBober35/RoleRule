@@ -16,6 +16,11 @@ class UserPolicy
     const UPDATE = 16;
     const DESTROY = 32;
 
+    /**
+     * @inheritDoc
+     *
+     * @return string[]
+     */
     public static function getPermissions()
     {
         return [
@@ -25,6 +30,16 @@ class UserPolicy
             self::UPDATE => "Обновление",
             self::DESTROY => "Удаление",
         ];
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @return int
+     */
+    public static function defaultRules()
+    {
+        return self::VIEW_ALL + self::VIEW + self::CREATE + self::UPDATE + self::DESTROY;
     }
 
     /**

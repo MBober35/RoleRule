@@ -23,12 +23,27 @@ class ManagementPolicy
         //
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @return string[]
+     */
     public static function getPermissions()
     {
         return [
             self::APP_MANAGEMENT => "Управление приложением",
             self::ROLE_MANAGEMENT => "Управление ролями",
         ];
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @return int
+     */
+    public static function defaultRules()
+    {
+        return self::APP_MANAGEMENT;
     }
 
     /**

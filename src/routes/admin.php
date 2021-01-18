@@ -21,6 +21,7 @@ Route::group([
             Route::get("/", [\App\Http\Controllers\RoleRule\RoleController::class, "show"])
                 ->name("rule");
             Route::put("/", [\App\Http\Controllers\RoleRule\RoleController::class, "updateRule"]);
+            Route::post("/", [\App\Http\Controllers\RoleRule\RoleController::class, "defaultRules"]);
         });
     });
 });

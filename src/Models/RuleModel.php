@@ -40,4 +40,18 @@ class RuleModel extends Model
         }
         return [];
     }
+
+    /**
+     * Стандартные права.
+     *
+     * @return int
+     */
+    public function getDefaultRulesAttribute()
+    {
+        $class = $this->policy;
+        if (class_exists($class) && method_exists($class, "defaultRules")) {
+            return $class::defaultRules();
+        }
+        return 0;
+    }
 }

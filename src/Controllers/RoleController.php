@@ -109,6 +109,14 @@ class RoleController extends Controller
         );
     }
 
+    /**
+     * Задать правила.
+     *
+     * @param Request $request
+     * @param Role $role
+     * @param Rule $rule
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateRule(Request $request, Role $role, Rule $rule)
     {
         $permisssions = $request->get("permisssions", []);

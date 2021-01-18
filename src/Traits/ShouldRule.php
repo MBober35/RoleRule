@@ -11,11 +11,21 @@ use Illuminate\Support\Facades\DB;
 
 trait ShouldRule
 {
+    /**
+     * Получить права.
+     *
+     * @return string[]
+     */
     public static function getPermissions()
     {
         return [];
     }
 
+    /**
+     * Стандартные права.
+     *
+     * @return int
+     */
     public static function defaultRules()
     {
         return 0;
