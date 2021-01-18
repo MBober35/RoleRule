@@ -8,16 +8,19 @@ Route::group([
 ], function () {
     Route::get("/", [\App\Http\Controllers\AdminController::class, "index"]);
 
-    Route::resource("roles", \App\Http\Controllers\RoleRule\RoleController::class);
-
     Route::resource("users", \App\Http\Controllers\RoleRule\UserController::class);
 
     Route::group([
-        "as" => "roles.",
-        "prefix" => "/roles/{role}/{rule}",
+        "middleware" => ["role-master"],
     ], function () {
-        Route::get("/", [\App\Http\Controllers\RoleRule\RoleController::class, "show"])
-            ->name("rule");
-        Route::put("/", [\App\Http\Controllers\RoleRule\RoleController::class, "updateRule"]);
+        Route::resource("roles", \App\Http\Controllers\RoleRule\RoleController::class);
+        Route::group([
+            "as" => "roles.",
+            "prefix" => "/roles/{role}/{rule}",
+        ], function () {
+            Route::get("/", [\App\Http\Controllers\RoleRule\RoleController::class, "show"])
+                ->name("rule");
+            Route::put("/", [\App\Http\Controllers\RoleRule\RoleController::class, "updateRule"]);
+        });
     });
 });

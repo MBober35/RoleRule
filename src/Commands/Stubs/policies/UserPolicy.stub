@@ -1,0 +1,7 @@
+<?php
+
+namespace App\Policies;
+
+use MBober35\RoleRule\Policies\UserPolicy as Policy;
+
+class UserPolicy extends Policy {}

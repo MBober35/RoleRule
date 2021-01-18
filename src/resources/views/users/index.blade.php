@@ -48,28 +48,36 @@
                                     <td>
                                         <div role="toolbar" class="btn-toolbar">
                                             <div class="btn-group mr-1">
-                                                <a href="{{ route("admin.users.edit", ["user" => $item]) }}" class="btn btn-primary">
-                                                    <i class="far fa-edit"></i>
-                                                </a>
-                                                <a href="{{ route('admin.users.show', ['user' => $item]) }}" class="btn btn-dark">
-                                                    <i class="far fa-eye"></i>
-                                                </a>
-                                                <button type="button" class="btn btn-danger" data-confirm="{{ "delete-user-form-{$item->id}" }}">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
+                                                @can("update", $item)
+                                                    <a href="{{ route("admin.users.edit", ["user" => $item]) }}" class="btn btn-primary">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                @endcan
+                                                @can("view", $item)
+                                                    <a href="{{ route('admin.users.show', ['user' => $item]) }}" class="btn btn-dark">
+                                                        <i class="far fa-eye"></i>
+                                                    </a>
+                                                @endcan
+                                                @can("destroy", $item)
+                                                    <button type="button" class="btn btn-danger" data-confirm="{{ "delete-user-form-{$item->id}" }}">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                @endcan
                                             </div>
                                         </div>
-                                        <confirm-form :id="'{{ "delete-user-form-{$item->id}" }}'">
-                                            <template>
-                                                <form action="{{ route('admin.users.destroy', ['user' => $item]) }}"
-                                                      id="delete-user-form-{{ $item->id }}"
-                                                      class="btn-group"
-                                                      method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                </form>
-                                            </template>
-                                        </confirm-form>
+                                        @can("destroy", $item)
+                                            <confirm-form :id="'{{ "delete-user-form-{$item->id}" }}'">
+                                                <template>
+                                                    <form action="{{ route('admin.users.destroy', ['user' => $item]) }}"
+                                                          id="delete-user-form-{{ $item->id }}"
+                                                          class="btn-group"
+                                                          method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                    </form>
+                                                </template>
+                                            </confirm-form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

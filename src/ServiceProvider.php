@@ -21,6 +21,7 @@ use MBober35\RoleRule\Events\UserRoleChange;
 use MBober35\RoleRule\Listeners\RoleRuleCacheClear;
 use MBober35\RoleRule\Listeners\UserRoleCacheClear;
 use MBober35\RoleRule\Middleware\Managemet;
+use MBober35\RoleRule\Middleware\RoleMaster;
 use MBober35\RoleRule\Middleware\SuperUser;
 
 class ServiceProvider extends BaseProvider
@@ -104,6 +105,7 @@ class ServiceProvider extends BaseProvider
     {
         $this->app["router"]->aliasMiddleware("management", Managemet::class);
         $this->app["router"]->aliasMiddleware("super", SuperUser::class);
+        $this->app["router"]->aliasMiddleware("role-master", RoleMaster::class);
     }
 
     /**
@@ -119,6 +121,7 @@ class ServiceProvider extends BaseProvider
         if (file_exists(app_path("Policies\ManagementPolicy.php"))) {
             Gate::define("app-management", [ManagementPolicy::class, "appManagement"]);
             Gate::define("settings-management", [ManagementPolicy::class, "settingsManagement"]);
+            Gate::define("role-management", [ManagementPolicy::class, "roleManagement"]);
         }
     }
 

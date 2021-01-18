@@ -11,6 +11,7 @@ class ManagementPolicy
     use HandlesAuthorization, ShouldRule;
 
     const APP_MANAGEMENT = 2;
+    const ROLE_MANAGEMENT = 4;
 
     /**
      * Create a new policy instance.
@@ -26,19 +27,38 @@ class ManagementPolicy
     {
         return [
             self::APP_MANAGEMENT => "Управление приложением",
+            self::ROLE_MANAGEMENT => "Управление ролями",
         ];
     }
 
-    public static function defaultRules()
+    /**
+     * Управление ролями.
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function roleManagement(User $user)
     {
-        return self::APP_MANAGEMENT;
+        return $this->checkPermit($user, self::ROLE_MANAGEMENT);
     }
 
+    /**
+     * Управление приложением.
+     *
+     * @param User $user
+     * @return bool
+     */
     public function appManagement(User $user)
     {
         return $this->checkPermit($user, self::APP_MANAGEMENT);
     }
 
+    /**
+     * Управление настройками.
+     *
+     * @param User $user
+     * @return mixed
+     */
     public function settingsManagement(User $user)
     {
         return $user->isSuperUser();

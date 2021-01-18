@@ -3,7 +3,8 @@
         <ul class="nav nav-pills flex-column">
             @foreach ($rules as $item)
                 <li class="nav-item">
-                    <a href="#" class="nav-link{{ ! empty($rule) && $rule->slug === $item->slug ? " active" : "" }}">
+                    <a href="{{ route("admin.roles.rule", ["rule" => $item, "role" => $role]) }}"
+                       class="nav-link{{ ! empty($rule) && $rule->slug === $item->slug ? " active" : "" }}">
                         {{ $item->title }}
                     </a>
                 </li>
