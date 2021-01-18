@@ -1,0 +1,7 @@
+<?php
+
+namespace App\Policies;
+
+use MBober35\RoleRule\Policies\ManagementPolicy as Policy;
+
+class ManagementPolicy extends Policy {}

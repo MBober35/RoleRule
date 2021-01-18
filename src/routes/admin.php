@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-    "middleware" => ["web"],
+    "middleware" => ["web", "auth", "management"],
     "prefix" => "admin",
     "as" => "admin.",
 ], function () {
