@@ -9,4 +9,6 @@ Route::group([
     Route::get("/", [\App\Http\Controllers\AdminController::class, "index"]);
 
     Route::resource("roles", \App\Http\Controllers\RoleRule\RoleController::class);
+
+    Route::resource("users", \App\Http\Controllers\RoleRule\UserController::class);
 });

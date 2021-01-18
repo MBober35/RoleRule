@@ -1,0 +1,7 @@
+<?php
+
+namespace App\Http\Controllers\RoleRule;
+
+use MBober35\RoleRule\Controllers\UserController as Controller;
+
+class UserController extends Controller {}
