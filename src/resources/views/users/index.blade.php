@@ -65,7 +65,7 @@
                                                 @endcan
                                             </div>
                                         </div>
-                                        @can("destroy", $item)
+                                        @can("delete", $item)
                                             <confirm-form :id="'{{ "delete-user-form-{$item->id}" }}'">
                                                 <template>
                                                     <form action="{{ route('admin.users.destroy', ['user' => $item]) }}"

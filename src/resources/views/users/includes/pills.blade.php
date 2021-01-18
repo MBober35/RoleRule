@@ -40,7 +40,7 @@
                             </li>
                         @endcan
 
-                        @can("destroy", $user)
+                        @can("delete", $user)
                             <li class="nav-item">
                                 <button type="button" class="btn btn-link nav-link" data-confirm="{{ "delete-form-role-{$user->id}" }}">
                                     <i class="fas fa-trash-alt text-danger"></i>
