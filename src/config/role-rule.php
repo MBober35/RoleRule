@@ -3,6 +3,6 @@
 return [
     "adminLayout" => "layouts.admin",
     "rules" => [
-        \App\Policies\ManagementPolicy::class => "Управление",
+        \App\Policies\ManagementPolicy::class => ["Управление", "management"],
     ],
 ];

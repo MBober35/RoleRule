@@ -9,6 +9,7 @@ use App\Policies\ManagementPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider as BaseProvider;
 use MBober35\RoleRule\Commands\InitRolesCommand;
+use MBober35\RoleRule\Commands\InitRulesCommand;
 use MBober35\RoleRule\Commands\RoleRuleCommand;
 use MBober35\RoleRule\Commands\SetAdminRoleCommand;
 use MBober35\RoleRule\Middleware\Managemet;
@@ -29,6 +30,7 @@ class ServiceProvider extends BaseProvider
                 RoleRuleCommand::class,
                 InitRolesCommand::class,
                 SetAdminRoleCommand::class,
+                InitRulesCommand::class,
             ]);
         }
 

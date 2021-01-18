@@ -4,10 +4,11 @@ namespace MBober35\RoleRule\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use MBober35\RoleRule\Traits\ShouldRule;
 
 class ManagementPolicy
 {
-    use HandlesAuthorization;
+    use HandlesAuthorization, ShouldRule;
 
     const APP_MANAGEMENT = 2;
 
@@ -28,10 +29,14 @@ class ManagementPolicy
         ];
     }
 
+    public static function defaultRules()
+    {
+        return self::APP_MANAGEMENT;
+    }
+
     public function appManagement(User $user)
     {
-        // TODO: make request
-        return false;
+        return $this->checkPermit($user, self::APP_MANAGEMENT);
     }
 
     public function settingsManagement(User $user)
