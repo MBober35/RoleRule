@@ -19,27 +19,27 @@
 
                     @isset($user)
                         <li class="nav-item">
-                            <a href="{{ route("admin.users.show", compact("role")) }}"
+                            <a href="{{ route("admin.users.show", compact("user")) }}"
                                class="nav-link{{ active_state()->sliceActive("show") }}">
                                 Просмотр
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route("admin.users.edit", compact("role")) }}"
+                            <a href="{{ route("admin.users.edit", compact("user")) }}"
                                class="nav-link{{ active_state()->sliceActive("edit") }}">
                                 Редактировать
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <button type="button" class="btn btn-link nav-link" data-confirm="{{ "delete-form-role-{$role->id}" }}">
+                            <button type="button" class="btn btn-link nav-link" data-confirm="{{ "delete-form-role-{$user->id}" }}">
                                 <i class="fas fa-trash-alt text-danger"></i>
                             </button>
-                            <confirm-form :id="'{{ "delete-form-role-{$role->id}" }}'">
+                            <confirm-form :id="'{{ "delete-form-role-{$user->id}" }}'">
                                 <template>
-                                    <form action="{{ route('admin.users.destroy', compact("role")) }}"
-                                          id="delete-form-role-{{ $role->id }}"
+                                    <form action="{{ route('admin.users.destroy', compact("user")) }}"
+                                          id="delete-form-role-{{ $user->id }}"
                                           class="btn-group"
                                           method="post">
                                         @csrf

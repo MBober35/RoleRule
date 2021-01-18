@@ -22,13 +22,24 @@ trait ShouldRole
      *
      * @return bool
      */
-    public function getRoleKeys()
+    public function getRoleKeysAttribute()
     {
         $user = $this;
-        return Cache::rememberForever("user-roles:{$this->id}", function () use ($user) {
+        return Cache::rememberForever("user-role-keys:{$this->id}", function () use ($user) {
             return $user->roles()
                 ->select("key")
                 ->pluck("key")
+                ->toArray();
+        });
+    }
+
+    public function getRoleIdsAttribute()
+    {
+        $user = $this;
+        return Cache::rememberForever("user-role-ids:{$this->id}", function () use ($user) {
+            return $user->roles()
+                ->select("id")
+                ->pluck("id")
                 ->toArray();
         });
     }
@@ -38,7 +49,8 @@ trait ShouldRole
      */
     public function clearRolesCache()
     {
-        Cache::forget("user-roles:{$this->id}");
+        Cache::forget("user-role-keys:{$this->id}");
+        Cache::forget("user-role-ids:{$this->id}");
     }
 
     /**
@@ -49,7 +61,7 @@ trait ShouldRole
      */
     public function hasRole($role)
     {
-        $keys = $this->getRoleKeys();
+        $keys = $this->role_keys;
         return in_array($role, $keys);
     }
 
