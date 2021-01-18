@@ -26,7 +26,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input"
                                                type="checkbox"
-                                               {{ (! count($errors->all()) && in_array($num, [])) || in_array($num, old("permisssions[]", [])) ? "checked" : "" }}
+                                               {{ ($rights & $num) || in_array($num, old("permisssions[]", [])) ? "checked" : "" }}
                                                value="{{ $num }}"
                                                id="check-{{ $num }}"
                                                name="permisssions[]">
@@ -35,6 +35,11 @@
                                         </label>
                                     </div>
                                 @endforeach
+                            </div>
+
+                            <div class="mb-3"
+                                 role="group">
+                                <button type="submit" class="btn btn-success">Обновить</button>
                             </div>
                         </form>
                     @else

@@ -33,6 +33,11 @@ trait ShouldRole
         });
     }
 
+    /**
+     * Получить id ролей.
+     *
+     * @return mixed
+     */
     public function getRoleIdsAttribute()
     {
         $user = $this;

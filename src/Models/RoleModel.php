@@ -2,6 +2,7 @@
 
 namespace MBober35\RoleRule\Models;
 
+use App\Models\Rule;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,16 +27,6 @@ class RoleModel extends Model
     protected $routeKey = "key";
 
     /**
-     * Стандартная роль.
-     *
-     * @return bool
-     */
-    public function getDefaultAttribute()
-    {
-        return ! empty(self::DEFAULT_ROLES[$this->key]);
-    }
-
-    /**
      * Пользователи.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -43,5 +34,25 @@ class RoleModel extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * Права доступа.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function rules()
+    {
+        return $this->belongsToMany(Rule::class)->withPivot("rights");
+    }
+
+    /**
+     * Стандартная роль.
+     *
+     * @return bool
+     */
+    public function getDefaultAttribute()
+    {
+        return ! empty(self::DEFAULT_ROLES[$this->key]);
     }
 }

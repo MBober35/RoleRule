@@ -3,8 +3,10 @@
 namespace MBober35\RoleRule;
 
 use App\Models\Role;
+use App\Models\Rule;
 use App\Models\User;
 use App\Observers\RoleObserver;
+use App\Observers\RuleObserver;
 use App\Observers\UserRoleObserver;
 use App\Policies\ManagementPolicy;
 use Illuminate\Support\Facades\Event;
@@ -14,7 +16,9 @@ use MBober35\RoleRule\Commands\InitRolesCommand;
 use MBober35\RoleRule\Commands\InitRulesCommand;
 use MBober35\RoleRule\Commands\RoleRuleCommand;
 use MBober35\RoleRule\Commands\SetAdminRoleCommand;
+use MBober35\RoleRule\Events\RoleRightsChange;
 use MBober35\RoleRule\Events\UserRoleChange;
+use MBober35\RoleRule\Listeners\RoleRuleCacheClear;
 use MBober35\RoleRule\Listeners\UserRoleCacheClear;
 use MBober35\RoleRule\Middleware\Managemet;
 use MBober35\RoleRule\Middleware\SuperUser;
@@ -87,6 +91,10 @@ class ServiceProvider extends BaseProvider
             UserRoleChange::class,
             [UserRoleCacheClear::class, "handle"]
         );
+        Event::listen(
+            RoleRightsChange::class,
+            [RoleRuleCacheClear::class, "handle"]
+        );
     }
 
     /**
@@ -124,6 +132,13 @@ class ServiceProvider extends BaseProvider
             file_exists(app_path("Models\Role.php"))
         ) {
             Role::observe(RoleObserver::class);
+        }
+
+        if (
+            file_exists(app_path("Observers\RuleObserver.php")) &&
+            file_exists(app_path("Models\Rule.php"))
+        ) {
+            Rule::observe(RuleObserver::class);
         }
 
         if (

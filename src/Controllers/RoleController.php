@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use MBober35\RoleRule\Events\RoleRightsChange;
 
 class RoleController extends Controller
 {
@@ -90,13 +92,41 @@ class RoleController extends Controller
             return redirect()
                 ->route("admin.roles.rule", compact("role", "rule"));
         }
-        return view("mbober-admin::roles.show", compact("role", "rules", "rule"));
+
+        if (! empty($rule)) {
+            $query = DB::table("role_rule")
+                ->select("rights")
+                ->where("role_id", $role->id)
+                ->where("rule_id", $rule->id)
+                ->first();
+        }
+
+        $rights = empty($query) ? 0 : $query->rights;
+
+        return view(
+            "mbober-admin::roles.show",
+            compact("role", "rules", "rule", "rights")
+        );
     }
 
-    public function updateRule(Role $role, Rule $rule)
+    public function updateRule(Request $request, Role $role, Rule $rule)
     {
+        $permisssions = $request->get("permisssions", []);
+        $rights = 0;
+        foreach ($permisssions as $permisssion) {
+            $rights += $permisssion;
+        }
+        $exist = $role->rules()->where("rule_id", $rule->id)->first();
+        if (! $exist) {
+            $role->rules()->save($rule, compact('rights'));
+        }
+        else {
+            $role->rules()->updateExistingPivot($rule, compact('rights'));
+        }
+        RoleRightsChange::dispatch($role, $rule);
         return redirect()
-            ->back();
+            ->back()
+            ->with("success", "Права обновлены");
     }
 
     /**

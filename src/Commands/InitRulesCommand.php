@@ -4,6 +4,7 @@ namespace MBober35\RoleRule\Commands;
 
 use App\Models\Rule;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 
 class InitRulesCommand extends Command
 {
@@ -38,9 +39,10 @@ class InitRulesCommand extends Command
      */
     public function handle()
     {
+        $current = [];
         foreach (config("role-rule.rules") as $class => $title) {
             if (! $this->check($class)) {
-                // TODO: remove if no check.
+                $this->removeIfExist($class);
                 continue;
             }
             if (is_array($title)) {
@@ -49,8 +51,42 @@ class InitRulesCommand extends Command
             else {
                 $slug = "";
             }
-            $this->createIfEmpty($class, $title, $slug);
+            $rule = $this->createIfEmpty($class, $title, $slug);
+            $current[] = $rule->policy;
         }
+        $this->removeExcept($current);
+    }
+
+    /**
+     * Удалить лишние.
+     *
+     * @param array $classes
+     * @throws \Exception
+     */
+    protected function removeExcept(array $classes)
+    {
+        $rules = Rule::query()
+            ->whereNotIn("policy", $classes)
+            ->get();
+        foreach ($rules as $rule) {
+            $this->removeIfExist($rule->policy);
+        }
+    }
+
+    /**
+     * Удалить политику.
+     *
+     * @param string $class
+     * @throws \Exception
+     */
+    protected function removeIfExist(string $class)
+    {
+        $rule = Rule::query()
+            ->where("policy", $class)
+            ->first();
+        if (empty($rule)) return;
+        $rule->delete();
+        $this->info("Policy {$rule->title} deleted.");
     }
 
     /**

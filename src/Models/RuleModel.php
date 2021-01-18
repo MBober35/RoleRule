@@ -2,6 +2,7 @@
 
 namespace MBober35\RoleRule\Models;
 
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use MBober35\Helpers\Traits\ShouldSlug;
@@ -15,6 +16,16 @@ class RuleModel extends Model
         "policy",
         "slug",
     ];
+
+    /**
+     * Роли.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withPivot("rights");
+    }
 
     /**
      * Доступне права.
