@@ -16,7 +16,7 @@
         @foreach ($users as $item)
             <tr>
                 <td>
-                    {{ active_state()->getItemPager($users, $loop->iteration) }}
+                    {{ active_state()->pager($users, $loop->iteration) }}
                 </td>
                 <td>
                     {{ $item->name }}

@@ -20,9 +20,15 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $query = Role::query();
+
         if ($title = $request->get("title", false)) {
             $query->where("title", "like", "%$title%");
         }
+
+        if ($key = $request->get("key", false)) {
+            $query->where("key", "like", "%$key%");
+        }
+
         $query->orderBy("title");
         $roles = $query
             ->paginate()
