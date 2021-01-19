@@ -28,14 +28,20 @@ class UserController extends Controller
         $query = User::query()
             ->with("roles");
 
-        // TODO: add filters
+        if ($name = $request->get("name", false)) {
+            $query->where("name", "like", "%{$name}%");
+        }
+
+        if ($email = $request->get("email", false)) {
+            $query->where("email", "like", "%{$email}%");
+        }
 
         $users = $query
             ->orderBy("name")
             ->paginate()
             ->appends($request->input());
 
-        return view("mbober-admin::users.index", compact("users", "request"));
+        return view("mbober-admin::users.index", compact("users"));
     }
 
     /**
