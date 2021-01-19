@@ -34,9 +34,22 @@ class RoleController extends Controller
             ->paginate()
             ->appends($request->input());
 
-        $perPage = $roles->perPage();
-        $page = $roles->currentPage();
-        return view("mbober-admin::roles.index", compact("request", "roles", "perPage", "page"));
+        return view("mbober-admin::roles.index", compact( "roles"));
+    }
+
+    public function users(Request $request, Role $role)
+    {
+        $query = $role->users();
+        if ($name = $request->get("name", false)) {
+            $query->where("name", "like", "%$name%");
+        }
+        if ($email = $request->get("email", false)) {
+
+            $query->where("email", "like", "%$email%");
+        }
+        $users = $query->paginate()->appends($request->input());
+
+        return view("mbober-admin::roles.users", compact("role", "users"));
     }
 
     /**

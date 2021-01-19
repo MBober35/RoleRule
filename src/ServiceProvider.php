@@ -60,7 +60,9 @@ class ServiceProvider extends BaseProvider
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
         // Адреса.
-        $this->loadRoutesFrom(__DIR__ . '/routes/admin.php');
+        $this->loadRoutesFrom(__DIR__ . '/routes/roles.php');
+        $this->loadRoutesFrom(__DIR__ . '/routes/dashboard.php');
+        $this->loadRoutesFrom(__DIR__ . '/routes/users.php');
 
         // Подключение шаблонов.
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'mbober-admin');

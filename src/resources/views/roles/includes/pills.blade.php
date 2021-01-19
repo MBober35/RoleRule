@@ -26,6 +26,13 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href="{{ route("admin.roles.users", compact("role")) }}"
+                               class="nav-link{{ active_state()->sliceActive("users") }}">
+                                Пользователи
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="{{ route("admin.roles.edit", compact("role")) }}"
                                class="nav-link{{ active_state()->sliceActive("edit") }}">
                                 Редактировать

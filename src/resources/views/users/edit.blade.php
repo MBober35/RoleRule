@@ -47,7 +47,7 @@
 
                         <div class="mb-3">
                             <label>Роли</label>
-                            @if (! \Illuminate\Support\Facades\Auth::user()->isSuperUser() && $user->isSuperUser())
+                            @if ($showHidden)
                                 @if ($id = \App\Models\Role::getSuperId())
                                     <input type="hidden" name="roles[]" value="{{ $id }}">
                                 @endif

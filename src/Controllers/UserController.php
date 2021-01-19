@@ -120,7 +120,8 @@ class UserController extends Controller
         $roles = Role::getForAdmin();
 
         $current = $user->role_ids;
-        return view("mbober-admin::users.edit", compact("user", "roles", "current"));
+        $showHidden = ! Auth::user()->isSuperUser() && $user->isSuperUser();
+        return view("mbober-admin::users.edit", compact("user", "roles", "current", "showHidden"));
     }
 
     /**
@@ -136,7 +137,15 @@ class UserController extends Controller
         $this->updateValidator($request->all(), $user);
         $user->update($request->all());
 
-        $user->roles()->sync($request->get("roles", []));
+        $roles = $request->get("roles", []);
+        
+        // Что бы не убрать Админа у себя.
+        $superId = Role::getSuperId();
+        if ($user->id == Auth::id() && ! in_array($superId, $roles)) {
+            $roles[] = $superId;
+        }
+
+        $user->roles()->sync($roles);
         UserRoleChange::dispatch($user);
         return redirect()
             ->route("admin.users.show", compact("user"))
