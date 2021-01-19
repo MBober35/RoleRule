@@ -7,8 +7,11 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use MBober35\RoleRule\Events\UserRoleChange;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class UserController extends Controller
 {
@@ -170,5 +173,64 @@ class UserController extends Controller
         return redirect()
             ->route("admin.users.index")
             ->with("success", "Пользователь успешно удален");
+    }
+
+    /**
+     * Получить ссылку на вход.
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getLink(User $user)
+    {
+        $output = new BufferedOutput;
+
+        Artisan::call("login-link", [
+            "email" => $user->email,
+            "--get" => true,
+        ], $output);
+
+        return redirect()
+            ->back()
+            ->with("success", $output->fetch());
+    }
+
+    /**
+     * Отправить ссылку на вход.
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function sendLink(User $user)
+    {
+        $output = new BufferedOutput;
+
+        Artisan::call("login-link", [
+            "email" => $user->email,
+        ], $output);
+
+        return redirect()
+            ->back()
+            ->with("success", "Ссылка создана");
+    }
+
+    /**
+     * Отправить ссылку текущему пользователю.
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function selfLink(User $user)
+    {
+        $output = new BufferedOutput;
+
+        Artisan::call("login-link", [
+            "email" => $user->email,
+            "--send" => Auth::user()->email,
+        ], $output);
+
+        return redirect()
+            ->back()
+            ->with("success", "Ссылка создана");
     }
 }
