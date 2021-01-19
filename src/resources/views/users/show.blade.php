@@ -49,31 +49,55 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">Авторизация</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Генерация одноразовой ссылки</h6>
+                    <h6 class="card-subtitle mb-3 text-muted">Генерация одноразовой ссылки</h6>
 
-                    <form action="{{ route("admin.users.get-link", compact("user")) }}" method="post">
-                        @csrf
-                        <div class="mb-3"
-                             role="group">
-                            <button type="submit" class="btn btn-outline-info">Вывести</button>
-                        </div>
-                    </form>
+                    <div class="btn-group-vertical w-100" role="group">
+                        <button type="button"
+                                data-confirm="get-link-form"
+                                class="btn btn-outline-secondary">
+                            Вывести
+                        </button>
+                        <button type="submit"
+                                data-confirm="self-link-form"
+                                class="btn btn-outline-secondary">
+                            Отправить себе
+                        </button>
+                        <button type="submit"
+                                data-confirm="send-link-form"
+                                class="btn btn-outline-secondary">
+                            Отправить пользователю
+                        </button>
+                    </div>
 
-                    <form action="{{ route("admin.users.self-link", compact("user")) }}" method="post">
-                        @csrf
-                        <div class="mb-3"
-                             role="group">
-                            <button type="submit" class="btn btn-outline-dark">Отправить себе</button>
-                        </div>
-                    </form>
+                    <confirm-form id="get-link-form" confirm-text="Да, отправить!">
+                        <template>
+                            <form action="{{ route("admin.users.get-link", compact("user")) }}"
+                                  id="get-link-form"
+                                  method="post">
+                                @csrf
+                            </form>
+                        </template>
+                    </confirm-form>
 
-                    <form action="{{ route("admin.users.send-link", compact("user")) }}" method="post">
-                        @csrf
-                        <div class="mb-3"
-                             role="group">
-                            <button type="submit" class="btn btn-outline-danger">Отправить пользователю</button>
-                        </div>
-                    </form>
+                    <confirm-form id="self-link-form" confirm-text="Да, отправить!">
+                        <template>
+                            <form action="{{ route("admin.users.self-link", compact("user")) }}"
+                                  id="self-link-form"
+                                  method="post">
+                                @csrf
+                            </form>
+                        </template>
+                    </confirm-form>
+
+                    <confirm-form id="send-link-form" confirm-text="Да, отправить!">
+                        <template>
+                            <form action="{{ route("admin.users.send-link", compact("user")) }}"
+                                  id="send-link-form"
+                                  method="post">
+                                @csrf
+                            </form>
+                        </template>
+                    </confirm-form>
                 </div>
             </div>
         </div>
