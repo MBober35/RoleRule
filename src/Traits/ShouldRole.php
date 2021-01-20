@@ -4,6 +4,7 @@ namespace MBober35\RoleRule\Traits;
 
 use App\Models\Role;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 
 trait ShouldRole
 {
@@ -47,6 +48,18 @@ trait ShouldRole
                 ->pluck("id")
                 ->toArray();
         });
+    }
+
+    /**
+     * Хэш пароля при сохранении.
+     *
+     * @param $value
+     */
+    public function setPasswordAttribute($value)
+    {
+        if (Hash::needsRehash($value)) {
+            $this->attributes["password"] = Hash::make($value);
+        }
     }
 
     /**

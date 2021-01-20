@@ -76,6 +76,7 @@ class UserController extends Controller
          */
         $user->save();
         $user->roles()->sync($request->get("roles", []));
+        UserRoleChange::dispatch($user);
         return redirect()
             ->route("admin.users.show", compact("user"))
             ->with("success", "Пользователь успешно добавлен");
