@@ -79,7 +79,7 @@ class ServiceProvider extends BaseProvider
         // Публикация конфигурации.
         $this->publishes([
             __DIR__ . '/config/role-rule.php' => config_path('role-rule.php'),
-        ]);
+        ], "config");
 
         // События.
         $this->setEvents();
