@@ -11,8 +11,8 @@
     "require": {
         "php": "^7.3|^8.0",
         "laravel/framework": "^8.0",
-        "mbober35/helpers": "^1.0",
-        "mbober35/starter": "^1.0"
+        "mbober35/helpers": "@dev",
+        "mbober35/starter": "@dev"
     },
     "autoload": {
         "psr-4": {
