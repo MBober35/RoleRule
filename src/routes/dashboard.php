@@ -8,5 +8,5 @@ Route::group([
     "prefix" => "admin",
     "as" => "admin.",
 ], function () {
-    Route::get("/", [AdminController::class, "index"]);
+    Route::get("/", [AdminController::class, "index"])->name("dashboard");
 });

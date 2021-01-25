@@ -6,6 +6,7 @@
 
     php artisan migrate
     php artisan role-rule
+    php artisan role-rule:make
     Добавить модели User трейт ShouldRole
 
 ## Commands
