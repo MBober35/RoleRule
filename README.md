@@ -9,6 +9,10 @@
     php artisan role-rule:make
     Добавить модели User трейт ShouldRole
 
+Публикация конфигурации:
+
+    php artisan vendor:publish --provider="MBober35\RoleRule\ServiceProvider" --tag=config
+
 ## Commands
 
 Добавить пользователю роль админа:

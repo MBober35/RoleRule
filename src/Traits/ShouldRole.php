@@ -51,18 +51,6 @@ trait ShouldRole
     }
 
     /**
-     * Хэш пароля при сохранении.
-     *
-     * @param $value
-     */
-    public function setPasswordAttribute($value)
-    {
-        if (Hash::needsRehash($value)) {
-            $this->attributes["password"] = Hash::make($value);
-        }
-    }
-
-    /**
      * Очистить кэш ролей.
      */
     public function clearRolesCache()

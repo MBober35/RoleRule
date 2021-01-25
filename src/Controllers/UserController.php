@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use MBober35\RoleRule\Events\UserRoleChange;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -68,9 +69,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->storeValidator($request->all());
+        $data = $request->all();
+        $this->storeValidator($data);
 
-        $user = User::create($request->all());
+        $data["password"] = Hash::make($data['password']);
+        $user = User::create($data);
         /**
          * @var User $user
          */
