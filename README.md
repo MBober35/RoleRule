@@ -2,6 +2,8 @@
 
 ## Install
 
+Установить [Helpers](https://packagist.org/packages/mbober35/helpers)
+
     php artisan migrate
     php artisan role-rule
     Добавить модели User трейт ShouldRole
