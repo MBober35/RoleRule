@@ -31,12 +31,12 @@
 
 ### Gates
 
-`app-management` - Должно быть право "Управление приложением"
-`role-management` - Должно быть право "Управление ролями"
-`settings-management` - Только админ
+- `app-management` - Должно быть право "Управление приложением"
+- `role-management` - Должно быть право "Управление ролями"
+- `settings-management` - Только админ
 
 ### Middlewares
 
-`management` - Gate `app-management`
-`super` - Gate `settings-management`
-`role-master` - Gate `role-master`
+- `management` - Gate `app-management`
+- `super` - Gate `settings-management`
+- `role-master` - Gate `role-master`
