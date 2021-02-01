@@ -1,4 +1,4 @@
-@extends(config("role-rule.adminLayout"))
+@extends("layouts.admin")
 
 @section("meta-title", "Dashboard")
 
