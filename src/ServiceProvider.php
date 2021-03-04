@@ -120,7 +120,7 @@ class ServiceProvider extends BaseProvider
             if ($user->hasRole(Role::SUPER)) return true;
         });
 
-        if (file_exists(app_path("Policies\ManagementPolicy.php"))) {
+        if (file_exists(app_path("Policies/ManagementPolicy.php"))) {
             Gate::define("app-management", [ManagementPolicy::class, "appManagement"]);
             Gate::define("settings-management", [ManagementPolicy::class, "settingsManagement"]);
             Gate::define("role-management", [ManagementPolicy::class, "roleManagement"]);
@@ -133,22 +133,22 @@ class ServiceProvider extends BaseProvider
     protected function addObservers()
     {
         if (
-            file_exists(app_path("Observers\RoleObserver.php")) &&
-            file_exists(app_path("Models\Role.php"))
+            file_exists(app_path("Observers/RoleObserver.php")) &&
+            file_exists(app_path("Models/Role.php"))
         ) {
             Role::observe(RoleObserver::class);
         }
 
         if (
-            file_exists(app_path("Observers\RuleObserver.php")) &&
-            file_exists(app_path("Models\Rule.php"))
+            file_exists(app_path("Observers/RuleObserver.php")) &&
+            file_exists(app_path("Models/Rule.php"))
         ) {
             Rule::observe(RuleObserver::class);
         }
 
         if (
-            file_exists(app_path("Observers\UserRoleObserver.php")) &&
-            file_exists(app_path("Models\User.php"))
+            file_exists(app_path("Observers/UserRoleObserver.php")) &&
+            file_exists(app_path("Models/User.php"))
         ) {
             User::observe(UserRoleObserver::class);
         }
